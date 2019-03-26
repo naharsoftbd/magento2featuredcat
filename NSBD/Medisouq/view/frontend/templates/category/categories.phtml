@@ -1,0 +1,34 @@
+<div class="row menu-links">
+<?php
+$categories = $block->getStoreCategories();
+$c = 0;
+
+foreach($categories as $category) : 
+  $categoryObj = $block->getCategoryById($category->getId());
+
+if($categoryObj->getData('is_featured')){
+  ?>
+  
+  <div class="col-sm-2">
+      <ul>
+      <?php
+      
+      echo '<li class="parent"><a href="'.$categoryObj->getUrl().'">'.$category->getName().'</a></li>';
+     
+      if($category->hasChildren()) {
+          $subCategories = $categoryObj->getChildrenCategories();
+
+          foreach($subCategories as $subCategory) {            
+              $subCategoryObj = $block->getCategoryById($subCategory->getId());
+               if($subCategoryObj->getData('is_featured')){
+                echo '<li><a href="'.$subCategoryObj->getUrl().'">'.$subCategory->getName().'</a></li>';
+               }
+              
+          }
+      } ?>
+      </ul>
+  </div>
+<?php } 
+
+endforeach;?>
+</div>
